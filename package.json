@@ -16,7 +16,7 @@
     "delta-updates",
     "auto-updater"
   ],
-  "author": "Jiang Qiang <a395027720@qq.com>",
+  "author": "Jake Gao",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/a395027720/delta-builder/issues"

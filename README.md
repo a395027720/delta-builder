@@ -70,27 +70,27 @@ npm install @jake-gao/delta-builder -D
 
 ```js
 // .electron-delta.js
-const DeltaBuilder = require('@jake-gao/delta-builder');
-const path = require('path');
+const DeltaBuilder = require("@jake-gao/delta-builder");
+const path = require("path");
 
 const options = {
-  productIconPath: path.join(__dirname, 'icon.ico'),
-  productName: 'electron-sample-app',
+  productIconPath: path.join(__dirname, "icon.ico"),
+  productName: "electron-sample-app",
 
   // 提供需要计算差量的历史版本列表。
   // 库会把这些版本分别与 electron-builder 当前构建出的安装包做差量。
   getPreviousReleases: async () => [
     {
-      version: '0.0.12',
-      url: 'https://github.com/electron-delta/electron-sample-app/releases/download/v0.0.12/electron-sample-app-0.0.12.exe',
+      version: "0.0.12",
+      url: "https://github.com/electron-delta/electron-sample-app/releases/download/v0.0.12/electron-sample-app-0.0.12.exe",
     },
     {
-      version: '0.0.11',
-      url: 'https://github.com/electron-delta/electron-sample-app/releases/download/v0.0.11/electron-sample-app-0.0.11.exe',
+      version: "0.0.11",
+      url: "https://github.com/electron-delta/electron-sample-app/releases/download/v0.0.11/electron-sample-app-0.0.11.exe",
     },
     {
-      version: '0.0.9',
-      url: 'https://github.com/electron-delta/electron-sample-app/releases/download/v0.0.9/electron-sample-app-0.0.9.exe',
+      version: "0.0.9",
+      url: "https://github.com/electron-delta/electron-sample-app/releases/download/v0.0.9/electron-sample-app-0.0.9.exe",
     },
   ],
 
@@ -122,23 +122,23 @@ electron-builder --win --mac
 
 返回 `Promise<string[]>` —— 生成的 delta 产物的绝对路径数组（安装器、`.delta` 文件、`delta-<platform>.json` 清单，以及 macOS 的辅助二进制）。
 
-| 参数      | 类型     | 说明                                                                                          |
-| --------- | -------- | --------------------------------------------------------------------------------------------- |
-| `context` | `object` | `electron-builder` 注入的构建上下文，由 `afterAllArtifactBuild` 钩子自动传入。                |
-| `options` | `object` | 构建选项，见下表。                                                                            |
+| 参数      | 类型     | 说明                                                                           |
+| --------- | -------- | ------------------------------------------------------------------------------ |
+| `context` | `object` | `electron-builder` 注入的构建上下文，由 `afterAllArtifactBuild` 钩子自动传入。 |
+| `options` | `object` | 构建选项，见下表。                                                             |
 
 ### `options`
 
-| 选项                 | 必填 | 说明                                                                                                                                                  |
-| -------------------- | ---- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `productName`        | ✅   | 产品名称，必须与安装包内的可执行文件 / `.app` 名称保持一致。                                                                                          |
-| `productIconPath`    | ✅   | `.ico` 图标的绝对路径（用于 Windows delta 安装器）。                                                                                                  |
-| `getPreviousReleases`| ✅   | `async ({ platform, target }) => Release[]`。每个 `Release` 必须包含 `{ version, url }`。最多取**最近 10 个**版本。                                  |
-| `sign`               | ✅   | `async (filePath) => void` —— 每个 Windows delta 安装器构建完成后、计算校验值之前被调用一次。                                                          |
-| `processName`        | ❌   | 进程名（若与 `productName` 不同）。默认等于 `productName`。                                                                                            |
-| `latestVersion`      | ❌   | 差量的**目标版本**。默认取 `process.env.npm_package_version`。                                                                                         |
-| `cache`              | ❌   | 历史安装包与中间 `.delta` 文件的缓存目录。默认 `~/.electron-delta/`，也可通过环境变量 `ELECTRON_DELTA_CACHE` 设置。                                     |
-| `logger`             | ❌   | 自定义日志器，默认 `console`。                                                                                                                        |
+| 选项                  | 必填 | 说明                                                                                                                |
+| --------------------- | ---- | ------------------------------------------------------------------------------------------------------------------- |
+| `productName`         | ✅   | 产品名称，必须与安装包内的可执行文件 / `.app` 名称保持一致。                                                        |
+| `productIconPath`     | ✅   | `.ico` 图标的绝对路径（用于 Windows delta 安装器）。                                                                |
+| `getPreviousReleases` | ✅   | `async ({ platform, target }) => Release[]`。每个 `Release` 必须包含 `{ version, url }`。最多取**最近 10 个**版本。 |
+| `sign`                | ✅   | `async (filePath) => void` —— 每个 Windows delta 安装器构建完成后、计算校验值之前被调用一次。                       |
+| `processName`         | ❌   | 进程名（若与 `productName` 不同）。默认等于 `productName`。                                                         |
+| `latestVersion`       | ❌   | 差量的**目标版本**。默认取 `process.env.npm_package_version`。                                                      |
+| `cache`               | ❌   | 历史安装包与中间 `.delta` 文件的缓存目录。默认 `~/.electron-delta/`，也可通过环境变量 `ELECTRON_DELTA_CACHE` 设置。 |
+| `logger`              | ❌   | 自定义日志器，默认 `console`。                                                                                      |
 
 ---
 
@@ -230,12 +230,12 @@ project-root/
 
 ```js
 // .delta-runner.js
-const DeltaBuilder = require('@jake-gao/delta-builder');
-const path = require('path');
-const fs = require('fs');
+const DeltaBuilder = require("@jake-gao/delta-builder");
+const path = require("path");
+const fs = require("fs");
 
 const STEP = (m) => console.log(`\n\x1b[36m[delta] ${m}\x1b[0m`);
-const OK   = (m) => console.log(`\x1b[32m  ✓\x1b[0m ${m}`);
+const OK = (m) => console.log(`\x1b[32m  ✓\x1b[0m ${m}`);
 const WARN = (m) => console.log(`\x1b[33m  ⚠\x1b[0m ${m}`);
 const INFO = (m) => console.log(`  • ${m}`);
 
@@ -247,10 +247,10 @@ const extractVersion = (name) => {
 
 /** 根据 npm script 名称推断当前环境 */
 const detectEnv = () => {
-  const s = process.env.npm_lifecycle_event || '';
-  if (s.includes('prod'))  return 'prod';
-  if (s.includes('stage')) return 'stage';
-  if (s.includes('test'))  return 'test';
+  const s = process.env.npm_lifecycle_event || "";
+  if (s.includes("prod")) return "prod";
+  if (s.includes("stage")) return "stage";
+  if (s.includes("test")) return "test";
   return null;
 };
 
@@ -263,24 +263,26 @@ const matchEnv = (name, env) => {
 
 /** 扫描历史版本目录 */
 function scanPreviousReleases(resourceUrl) {
-  const localDir = path.join(__dirname, 'out', 'previous-releases');
+  const localDir = path.join(__dirname, "out", "previous-releases");
   const env = detectEnv();
   if (!fs.existsSync(localDir)) {
-    WARN('out/previous-releases/ 不存在，跳过增量差分');
+    WARN("out/previous-releases/ 不存在，跳过增量差分");
     return [];
   }
 
-  const all = fs.readdirSync(localDir).filter(f => f.endsWith('.exe') || f.endsWith('.7z'));
-  const matched = all.filter(f => matchEnv(f, env));
+  const all = fs
+    .readdirSync(localDir)
+    .filter((f) => f.endsWith(".exe") || f.endsWith(".7z"));
+  const matched = all.filter((f) => matchEnv(f, env));
   if (matched.length === 0) {
-    WARN(`无 ${env || '当前'} 环境的历史版本，跳过增量差分`);
+    WARN(`无 ${env || "当前"} 环境的历史版本，跳过增量差分`);
     return [];
   }
 
   // 与更新服务器路径约定保持一致
-  const base = resourceUrl ? `${resourceUrl.replace(/\/+$/, '')}/updates` : '';
-  STEP(`扫描历史安装器 [环境: ${env || '未知'}]`);
-  return matched.map(f => {
+  const base = resourceUrl ? `${resourceUrl.replace(/\/+$/, "")}/updates` : "";
+  STEP(`扫描历史安装器 [环境: ${env || "未知"}]`);
+  return matched.map((f) => {
     const version = extractVersion(f);
     INFO(`${f}  →  v${version}`);
     return { version, url: base ? `${base}/${f}` : f };
@@ -289,8 +291,8 @@ function scanPreviousReleases(resourceUrl) {
 
 /** 把本地安装器预热到 builder 缓存（VPN 关键步骤） */
 function warmCache(cacheDir, releases) {
-  const dataDir = path.join(cacheDir, 'data');
-  const localDir = path.join(__dirname, 'out', 'previous-releases');
+  const dataDir = path.join(cacheDir, "data");
+  const localDir = path.join(__dirname, "out", "previous-releases");
   if (!fs.existsSync(localDir) || releases.length === 0) return;
   fs.mkdirSync(dataDir, { recursive: true });
 
@@ -309,28 +311,32 @@ function warmCache(cacheDir, releases) {
 }
 
 const options = {
-  productIconPath: path.join(__dirname, 'build', 'icons', 'icon.ico'),
-  productName: '',
-  cache: path.join(require('os').homedir(), '.electron-delta'),
+  productIconPath: path.join(__dirname, "build", "icons", "icon.ico"),
+  productName: "",
+  cache: path.join(require("os").homedir(), ".electron-delta"),
   getPreviousReleases: async () => [],
   sign: async (_) => {},
 };
 
 exports.default = async function (context) {
   // 从 electron-builder config 注入 productName / version
-  options.productName   = context.configuration.productName || 'electron-app';
-  options.latestVersion = context.configuration.extraMetadata?.version || '1.0.0';
+  options.productName = context.configuration.productName || "electron-app";
+  options.latestVersion =
+    context.configuration.extraMetadata?.version || "1.0.0";
 
   const env = detectEnv();
-  STEP(`产品: ${options.productName}  版本: ${options.latestVersion}  环境: ${env || '未知'}`);
+  STEP(
+    `产品: ${options.productName}  版本: ${options.latestVersion}  环境: ${env || "未知"}`,
+  );
 
   // 1. 收集历史版本（自动按环境过滤）
-  const releases = scanPreviousReleases(context.configuration.extraMetadata?.resourceUrl)
-    .filter(r => r.version !== options.latestVersion);
+  const releases = scanPreviousReleases(
+    context.configuration.extraMetadata?.resourceUrl,
+  ).filter((r) => r.version !== options.latestVersion);
   options.getPreviousReleases = async () => releases;
 
   if (releases.length === 0) {
-    INFO('首次增量构建，无历史版本可对比；本次安装器会自动存档');
+    INFO("首次增量构建，无历史版本可对比；本次安装器会自动存档");
     archiveInstaller(options.latestVersion);
     return [];
   }
@@ -339,7 +345,7 @@ exports.default = async function (context) {
   warmCache(options.cache, releases);
 
   // 3. 真正生成差分
-  STEP('开始生成增量差分补丁...');
+  STEP("开始生成增量差分补丁...");
   const files = await DeltaBuilder.build({ context, options });
   if (files?.length) OK(`差分补丁生成完成，共 ${files.length} 个文件`);
 
@@ -350,19 +356,27 @@ exports.default = async function (context) {
 
 /** 自动把本次构建出的安装器存档到 previous-releases（按环境隔离） */
 function archiveInstaller(latestVersion) {
-  const outDir  = path.join(__dirname, 'out');
-  const prevDir = path.join(outDir, 'previous-releases');
+  const outDir = path.join(__dirname, "out");
+  const prevDir = path.join(outDir, "previous-releases");
   const env = detectEnv();
   if (!fs.existsSync(outDir)) return;
 
-  const files = fs.readdirSync(outDir)
-    .filter(f => f.endsWith('.exe') && matchEnv(f, env) && extractVersion(f) === latestVersion);
+  const files = fs
+    .readdirSync(outDir)
+    .filter(
+      (f) =>
+        f.endsWith(".exe") &&
+        matchEnv(f, env) &&
+        extractVersion(f) === latestVersion,
+    );
   if (files.length === 0) return;
 
   fs.mkdirSync(prevDir, { recursive: true });
 
   // 清理同环境的旧版本，只保留最近一次构建
-  for (const old of fs.readdirSync(prevDir).filter(f => f.endsWith('.exe') && matchEnv(f, env))) {
+  for (const old of fs
+    .readdirSync(prevDir)
+    .filter((f) => f.endsWith(".exe") && matchEnv(f, env))) {
     fs.unlinkSync(path.join(prevDir, old));
   }
 
@@ -379,30 +393,30 @@ function archiveInstaller(latestVersion) {
 
 ```js
 // scripts/delta-summary.js
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 const STEP = (n, m) => console.log(`\n\x1b[36m[${n}]\x1b[0m ${m}`);
-const OK   = (m) => console.log(`\x1b[32m  ✓\x1b[0m ${m}`);
+const OK = (m) => console.log(`\x1b[32m  ✓\x1b[0m ${m}`);
 const WARN = (m) => console.log(`\x1b[33m  ⚠\x1b[0m ${m}`);
 const INFO = (m) => console.log(`  • ${m}`);
 
 function main() {
-  const outDir = path.join(__dirname, '..', 'out');
-  const installers  = [];
-  const deltaFiles  = [];
+  const outDir = path.join(__dirname, "..", "out");
+  const installers = [];
+  const deltaFiles = [];
   let totalMB = 0;
   let deltaKB = 0;
 
   if (fs.existsSync(outDir)) {
     for (const entry of fs.readdirSync(outDir)) {
       const p = path.join(outDir, entry);
-      if (fs.statSync(p).isFile() && entry.endsWith('.exe')) {
+      if (fs.statSync(p).isFile() && entry.endsWith(".exe")) {
         const mb = fs.statSync(p).size / 1024 / 1024;
         installers.push({ name: entry, size: mb.toFixed(1) });
         totalMB += mb;
       }
-      if (fs.statSync(p).isDirectory() && entry.endsWith('-deltas')) {
+      if (fs.statSync(p).isDirectory() && entry.endsWith("-deltas")) {
         for (const f of fs.readdirSync(p)) {
           const fp = path.join(p, f);
           const kb = fs.statSync(fp).size / 1024;
@@ -413,22 +427,24 @@ function main() {
     }
   }
 
-  console.log('\n  安装程序:');
-  installers.forEach(i => INFO(`${i.name}  (${i.size} MB)`));
+  console.log("\n  安装程序:");
+  installers.forEach((i) => INFO(`${i.name}  (${i.size} MB)`));
 
-  console.log('\n  增量差分补丁:');
+  console.log("\n  增量差分补丁:");
   if (deltaFiles.length === 0) {
-    WARN('未生成（首次构建或缺少历史安装器）');
+    WARN("未生成（首次构建或缺少历史安装器）");
   } else {
-    deltaFiles.forEach(f => INFO(`${f.dir}/${f.name}  (${f.size} KB)`));
+    deltaFiles.forEach((f) => INFO(`${f.dir}/${f.name}  (${f.size} KB)`));
   }
 
   STEP(1, `上传 ${installers.length + deltaFiles.length} 个文件到更新服务器`);
-  STEP(2, '测试：在测试机上安装上一版本 → 启动 → 验证自动更新');
+  STEP(2, "测试：在测试机上安装上一版本 → 启动 → 验证自动更新");
 
   if (installers.length && deltaFiles.length) {
     const saved = ((1 - deltaKB / (totalMB * 1024 * 1024)) * 100).toFixed(1);
-    OK(`全量 ${totalMB.toFixed(0)}MB → 增量 ${(deltaKB / 1024).toFixed(1)}MB，节省约 ${saved}% 流量`);
+    OK(
+      `全量 ${totalMB.toFixed(0)}MB → 增量 ${(deltaKB / 1024).toFixed(1)}MB，节省约 ${saved}% 流量`,
+    );
   }
 }
 main();
@@ -439,9 +455,9 @@ main();
 ```json
 {
   "scripts": {
-    "build:w:test":    "electron-builder --config=./cmd/builder-test.json  -w=nsis --ia32 && node scripts/delta-summary.js",
-    "build:w:stage":   "electron-builder --config=./cmd/builder-stage.json -w=nsis --x64   && node scripts/delta-summary.js",
-    "build:w:prod":    "electron-builder --config=./cmd/builder-prod.json  -w=nsis --x64   && node scripts/delta-summary.js",
+    "build:w:test": "electron-builder --config=./cmd/builder-test.json  -w=nsis --ia32 && node scripts/delta-summary.js",
+    "build:w:stage": "electron-builder --config=./cmd/builder-stage.json -w=nsis --x64   && node scripts/delta-summary.js",
+    "build:w:prod": "electron-builder --config=./cmd/builder-prod.json  -w=nsis --x64   && node scripts/delta-summary.js",
     "clear-delta-cache": "node scripts/clear-delta-cache.js"
   },
   "build": {
@@ -469,13 +485,13 @@ main();
 
 #### 5. 关键设计要点
 
-| 问题 | 解法 |
-| ---- | ---- |
-| 手动维护历史版本列表太累 | 自动扫描 `out/previous-releases/`，构建结束后自动把当前安装器复制进去 |
-| 不同环境（test/stage/prod）产物互相覆盖 | 按 npm script 名推断环境，按 `-test/-stage/-prod` 后缀过滤；存档时也只清理同环境的旧版本 |
-| VPN/内网无法下载历史安装器 | `warmCache()` 在构建前把本地安装器复制到 `~/.electron-delta/data/`，builder 的下载逻辑直接命中缓存 |
-| NSIS 在 VPN 环境拉不下来 | 项目本地或 `%APPDATA%\electron-delta-bins\` 预置 `nsis.zip`，运行时校验完整性并自动解压 |
-| 不知道该上传哪些文件 | `delta-summary.js` 总结安装器 + 差分文件，按平台/版本过滤后给出清单和流量节省比例 |
+| 问题                                    | 解法                                                                                               |
+| --------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| 手动维护历史版本列表太累                | 自动扫描 `out/previous-releases/`，构建结束后自动把当前安装器复制进去                              |
+| 不同环境（test/stage/prod）产物互相覆盖 | 按 npm script 名推断环境，按 `-test/-stage/-prod` 后缀过滤；存档时也只清理同环境的旧版本           |
+| VPN/内网无法下载历史安装器              | `warmCache()` 在构建前把本地安装器复制到 `~/.electron-delta/data/`，builder 的下载逻辑直接命中缓存 |
+| NSIS 在 VPN 环境拉不下来                | 项目本地或 `%APPDATA%\electron-delta-bins\` 预置 `nsis.zip`，运行时校验完整性并自动解压            |
+| 不知道该上传哪些文件                    | `delta-summary.js` 总结安装器 + 差分文件，按平台/版本过滤后给出清单和流量节省比例                  |
 
 ---
 
@@ -499,5 +515,4 @@ node tests/win.js
 
 ## 📄 许可证
 
-[MIT](./LICENSE) © Jiang Qiang
-
+[MIT](./LICENSE) © Jake Gao
