@@ -1,6 +1,6 @@
 {
-  "name": "@electron-delta/builder",
-  "version": "0.1.17",
+  "name": "@jake-gao/delta-builder",
+  "version": "1.0.1",
   "description": "True delta updates for electronjs.",
   "main": "src/index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/electron-delta/electron-delta.git"
+    "url": "https://github.com/a395027720/delta-builder"
   },
   "keywords": [
     "electron-delta-builder",
@@ -16,12 +16,12 @@
     "delta-updates",
     "auto-updater"
   ],
-  "author": "Sandeep Acharya <i.am.sandeep.acharya@gmail.com>",
-  "license": "UNLICENSED",
+  "author": "Jiang Qiang <a395027720@qq.com>",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/electron-delta/electron-delta/issues"
+    "url": "https://github.com/a395027720/delta-builder/issues"
   },
-  "homepage": "https://github.com/electron-delta/electron-delta#readme",
+  "homepage": "https://github.com/a395027720/delta-builder#readme",
   "dependencies": {
     "7zip-bin": "^5.2.0",
     "env-paths": "^2.2.1",
